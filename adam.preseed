@@ -1,33 +1,55 @@
 ### Partitioning
+#Elige el disco a particionar
 d-i partman-auto/disk string /dev/sda
+#Elige encriptar
 d-i partman-auto/method string crypto
+#Elige contraseña encriptada de la partición
 d-i partman-crypto/passphrase password uQZ86Fe1pWOew
+#Elige contraseña encriptada de la partición otra vez
 d-i partman-crypto/passphrase-again password uQZ86Fe1pWOew
+#Remueve LVMs previos
 d-i partman-lvm/device_remove_lvm boolean true
+#Idem
 d-i partman-auto/purge_lvm_from_device  boolean true
+#Similar
 d-i partman-md/device_remove_md boolean true
+#Elije la receta para la partición
 d-i partman-auto/choose_recipe select atomic
+#Confirma la partición del disco en lvm
 d-i partman-lvm/confirm boolean true
 
 # This makes partman automatically partition without confirmation
+
 d-i partman-partitioning/confirm_write_new_label boolean true
 d-i partman/choose_partition select finish
 d-i partman/confirm boolean true
+
+#No sobreescribir espacios vacíos del disco
 d-i partman/confirm_nooverwrite boolean true
 
 # Locale
-d-i debian-installer/locale string en_US
+
+#Instalador en inglés y en US (por default)
+d-i debian-installer/locale string 
+#Que no intente detectar el tipo de teclado tecleando algunas cosas
 d-i console-setup/ask_detect boolean false
+#Fijar el tipo de teclado
 d-i console-setup/layoutcode string us
 
 # Network
+#Obtiene el host de la red y lo asigna
 #d-i netcfg/get_hostname string unassigned-hostname
+#Obtiene el dominio de la red y lo asigna a unassigned-domain
 #d-i netcfg/get_domain string unassigned-domain
+#Elige interfaz que tenga conexión si es posible.
 #d-i netcfg/choose_interface select auto
 
 # Clock
+#Ver si el reloj se va a configurar con utc
 d-i clock-setup/utc-auto boolean true
+#Poner el hardware clock en UTC
 d-i clock-setup/utc boolean true
+#Fijar la zona horaria al este de US
 d-i time/zone string US/Eastern
 #d-i clock-setup/ntp boolean true
 
