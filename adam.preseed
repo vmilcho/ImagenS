@@ -3,15 +3,18 @@
 d-i partman-auto/disk string /dev/sda
 #Elige encriptar
 d-i partman-auto/method string crypto
-#Elige contraseña encriptada de la partición
-d-i partman-crypto/passphrase password uQZ86Fe1pWOew
-#Elige contraseña encriptada de la partición otra vez
-d-i partman-crypto/passphrase-again password uQZ86Fe1pWOew
+#Elige contraseña de la partición
+#d-i partman-crypto/passphrase password uQZ86Fe1pWOew
+#Elige contraseña passphrase de la partición otra vez
+#d-i partman-crypto/passphrase-again password uQZ86Fe1pWOew
+#Se pone perritos como passphrase
+#d-i partman-crypto/passphrase password perritos
+#d-i partman-crypto/passphrase-again password perritos
 #Remueve LVMs previos
 d-i partman-lvm/device_remove_lvm boolean true
 #Idem
 d-i partman-auto/purge_lvm_from_device  boolean true
-#Similar
+#Similar pero remueve RAID
 d-i partman-md/device_remove_md boolean true
 #Elije la receta para la partición
 d-i partman-auto/choose_recipe select atomic
