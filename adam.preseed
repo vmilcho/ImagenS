@@ -1,25 +1,75 @@
 ### Partitioning
-#Elige el disco a particionar
-d-i partman-auto/disk string /dev/sda
+
 #Elige encriptar
 d-i partman-auto/method string crypto
+
 #Elige contraseña de la partición
 #d-i partman-crypto/passphrase password uQZ86Fe1pWOew
+
 #Elige contraseña passphrase de la partición otra vez
 #d-i partman-crypto/passphrase-again password uQZ86Fe1pWOew
+
 #Se pone perritos como passphrase
 #d-i partman-crypto/passphrase password perritos
 #d-i partman-crypto/passphrase-again password perritos
+
 #Remueve LVMs previos
 d-i partman-lvm/device_remove_lvm boolean true
+
 #Idem
 d-i partman-auto/purge_lvm_from_device  boolean true
-#Similar pero remueve RAID
-d-i partman-md/device_remove_md boolean true
-#Elije la receta para la partición
-d-i partman-auto/choose_recipe select atomic
+
+#Elije la receta para la partición, si es atomic es sólo una partición
+#d-i partman-auto/choose_recipe select atomic
+
 #Confirma la partición del disco en lvm
 d-i partman-lvm/confirm boolean true
+
+#Ajusta para que tome el mayor tamaño disponible el lvm
+d-i partman-auto-lvm/guided_size string max
+
+#Crea nuevo vg llamado crypt
+d-i partman-auto/new_vg_name string crypt
+
+#Elige el disco a particionar, y define una receta
+d-i partman-auto/disk string /dev/sda
+d-i partman-auto/choose_recipe select root-encrypted
+d-i partman-auto/expert_recipe string
+
+\
+      root-encrypted ::                                       \
+              500 500 500 ext3                                \
+                      $primary{ } $bootable{ }                \
+                      method{ format } format{ }              \
+                      use_filesystem{ } filesystem{ ext4 }    \
+                      mountpoint{ /boot }                     \
+              .                                               \
+              2000 2000 2000 linux-swap                       \
+                      $lvmok{ } lv_name{ swap }               \
+                      in_vg { crypt }                         \
+                      $primary{ }                             \
+                      method{ swap } format{ }                \
+              .                                               \
+              500 10000 1000000000 ext4                       \
+                      $lvmok{ } lv_name{ root }               \
+                      in_vg { crypt }                         \
+                      $primary{ }                             \
+                      method{ format } format{ }              \
+                      use_filesystem{ } filesystem{ ext4 }    \
+                      mountpoint{ / }                         \
+              .                                               \
+              2000 2000 2000 ext4                             \
+                      $primary{ }                             \
+                      method{ keep }                          \
+                      use_filesystem{ } filesystem{ ext4 }    \
+                      label{ rescuedisk }                     \
+              .
+
+#Similar pero remueve RAID
+d-i partman-md/device_remove_md boolean true
+
+#El sistema de archivos no necesita montarse
+d-i partman-basicfilesystems/no_mount_point boolean false
 
 # This makes partman automatically partition without confirmation
 
@@ -32,8 +82,8 @@ d-i partman/confirm_nooverwrite boolean true
 
 # Locale
 
-#Instalador en inglés y en US (por default)
-d-i debian-installer/locale string 
+#Instalador en español mexicano
+d-i debian-installer/locale string es_MX.UTF-8
 #Que no intente detectar el tipo de teclado tecleando algunas cosas
 d-i console-setup/ask_detect boolean false
 #Fijar el tipo de teclado
