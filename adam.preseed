@@ -103,6 +103,8 @@ d-i console-setup/ask_detect boolean false
 
 #Fijar el tipo de teclado
 d-i console-setup/layoutcode string latam
+d-i keyboard-configuration/layout select Spanish (Latin American)
+d-i keyboard-configuration/layoutcode string latam
 
 #Alguna cuestion del keymap, esto estropea la configuración, ignoro por qué
 #d-i keyboard-configuration/xkb-keymap select latam
