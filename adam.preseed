@@ -84,43 +84,99 @@ d-i partman/confirm_nooverwrite boolean true
 
 #Instalador en español mexicano
 d-i debian-installer/locale string es_MX.UTF-8
+
+#Lenguaje español y país México
+d-i debian-installer/language string es
+d-i debian-installer/country string MX
+
+#Otros tolerados
+d-i localechooser/supported-locales multiselect en_US.UTF-8
+
 #Que no intente detectar el tipo de teclado tecleando algunas cosas
 d-i console-setup/ask_detect boolean false
+
 #Fijar el tipo de teclado
-d-i console-setup/layoutcode string us
+d-i console-setup/layoutcode string latam
+
+#Alguna cuestion del keymap, esto estropea la configuración, ignoro por qué
+#d-i keyboard-configuration/xkb-keymap select latam
 
 # Network
-#Obtiene el host de la red y lo asigna
+
+#Obtiene el host de la red y lo asigna, aparece entonces en el prompt
 #d-i netcfg/get_hostname string unassigned-hostname
+
 #Obtiene el dominio de la red y lo asigna a unassigned-domain
 #d-i netcfg/get_domain string unassigned-domain
-#Elige interfaz que tenga conexión si es 
+
+#Elige interfaz que tenga conexión si es posible conectarse; asi se omite mostrar una lista si hay más deuuna posible
 #d-i netcfg/choose_interface select auto
 
-# Clock
+#Si queremos una en particular
+d-i netcfg/choose_interface select wlp3s0
+
+#Para configurar la red manualmente
+d-i netcfg/disable_autoconfig boolean true
+
+# Clock , las opciones de time zone están en /usr/share/zoneinfo
+
 d-i clock-setup/utc-auto boolean true
+
+#Para que el hardware clock esté en UTC
 d-i clock-setup/utc boolean true
-d-i time/zone string US/Eastern
+
+#Horario de Mexico
+d-i time/zone string Mexico/General
+
+#Para usar el network time protocol
 #d-i clock-setup/ntp boolean true
 
 # Packages, Mirrors, Image
 #d-i base-installer/kernel/override-image string linux-server
 #d-i base-installer/kernel/override-image string linux-image-amd64
-#d-i mirror/country string US
-#d-i mirror/http/proxy string
+
+#Elegir país del Mirror
+d-i mirror/country string MX
+
+#Elegir proxy
+d-i mirror/http/proxy string http://nav_seg1:Soporte18@proxy.sat.gob.mx:3128
+
 #d-i apt-setup/restricted boolean true
 #d-i apt-setup/universe boolean true
 #d-i pkgsel/install-language-support boolean false
 #tasksel tasksel/first multiselect ubuntu-desktop
 
 # Users
-d-i passwd/user-fullname string User
-d-i passwd/username string cs
-d-i passwd/user-password-crypted password uQZ86Fe1pWOew
-d-i passwd/user-default-groups string sudo
-d-i passwd/root-login boolean true
-d-i passwd/root-password-crypted password uQZ86Fe1pWOew
+
+#Permitir contraseñas débiles
 d-i user-setup/allow-password-weak boolean true
+
+#Creando la raíz
+d-i passwd/root-login boolean true
+d-i passwd/root-password-crypted password AR0IHaCqNtp.s
+
+#para saltarse la creación de raíz
+#d-i passwd/root-login boolean false
+#para saltarse la creación de un usuario normal
+#d-i passwd/make-user boolean false
+
+#Creando un usuario
+d-i passwd/user-fullname string Judas
+d-i passwd/username string judas
+
+#Fijar la contraseña del usuario
+d-i passwd/user-password password Tadeo
+d-i passwd/user-password-again password Tadeo
+
+#Si se quiere la contraseña encriptada (hash md5 para perrazos pero se pueden otros tipos)
+#d-i passwd/user-password-crypted password 40c663ae06575e3772ad77d03270c252
+
+#Si se quiere que tenga un id distinto al estándar
+d-i passwd/user-uid string 1010
+
+#Para que el usuario no sea añadido a los grupos por defecto
+d-i passwd/user-default-groups string cristianos
+
 
 # Grub
 d-i grub-installer/grub2_instead_of_grub_legacy boolean true
