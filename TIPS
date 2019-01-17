@@ -1,1 +1,1 @@
-La instalación de nuevos paquetes en la instalación desde sudo apt se puede hacer desde Cubic en la tercera fase de la instalación.
+La instalación de nuevos paquetes en la instalación desde sudo apt se puede hacer desde Cubic en la tercera fase de la instalación, pero esto interfiere con la instalación, intensamente.
