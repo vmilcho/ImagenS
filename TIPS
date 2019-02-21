@@ -1,1 +1,9 @@
 La instalación de nuevos paquetes en la instalación desde sudo apt se puede hacer desde Cubic en la tercera fase de la instalación, pero esto interfiere con la instalación, intensamente.
+Los paquetes que instalaremos aparte:
+  vim
+  curl
+  net-tools
+  openconnect
+  lo de las mayúsculas
+Editar los íconos de la barra de herramientas
+Configurar Thunderbird
