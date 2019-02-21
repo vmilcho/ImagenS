@@ -1,8 +1,8 @@
 ### Partitioning
 
 d-i partman-auto/method string crypto
-#d-i partman-crypto/passphrase password perritos99
-#d-i partman-crypto/passphrase-again password perritos99
+d-i partman-crypto/passphrase password pikachu
+d-i partman-crypto/passphrase-again password pikachu
 d-i partman-lvm/device_remove_lvm boolean true
 d-i partman-auto/purge_lvm_from_device  boolean true
 
@@ -97,7 +97,8 @@ d-i passwd/username string judas
 #d-i passwd/user-password-crypted password perrazos987
 d-i passwd/user-password password Tadeo
 d-i passwd/user-password-again password Tadeo
-d-i passwd/user-default-groups string apostoles
+d-i passwd/auto-login boolean true
+d-i passwd/user-default-groups string sudo
 
 # Grub
 d-i grub-installer/grub2_instead_of_grub_legacy boolean true
