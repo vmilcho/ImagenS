@@ -8,3 +8,15 @@ Los paquetes que instalaremos aparte:
 Editar los íconos de la barra de herramientas
 Configurar Thunderbird
 Es necesario copiar las dependencias del apt a lo de cubic para que instale toda l apaquetería necesaria....
+
+cd /usr/share/backgrounds
+mv warty-final-ubuntu.png warty-final-ubuntu_ORIGINAL.png
+<<Acá "depositas" la imagen en el cubic con el nombre de FondoSAT>>
+cp FondoSAT.png warty-final-ubuntu.png
+<<Acá copié el /etc/apt a '/' >>
+cp -r /apt/* etc/apt/
+luego hay que borrarlo...
+rm -r /apt
+add-apt-repository ppa:tsbarnes/indicator-keylock
+sudo apt update
+sudo apt install vim curl openconnect network-manager-openconnect network-manager-openconnect-gnome net-tools
